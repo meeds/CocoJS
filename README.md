@@ -10,7 +10,7 @@ With the $CocoJS you can :
 1 - Define the $CocoJS factory with other library as JQUERY
 
 $CocoJS.factory = {
-    'JQUERY' : $CocoJS.$$document.$ /* Don't forget to add the jquery js dependency (<script src="...jquery"/>)*/
+    'JQUERY' : $CocoJS.$$document.$ 
 }
 
 2 - Define your application module
