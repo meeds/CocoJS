@@ -31,7 +31,7 @@ var $CocoJS = $CocoJS || ($CocoJS = (function (window) {
             return typeof value === 'number';
         };
         isDate = function (value) {
-            return toString.call(value) === '[object Date]';
+            return "".toString.call(value) === '[object Date]';
         };
         isArrayLike = Array.isArray;
         find = function (id) {
