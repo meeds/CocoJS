@@ -62,17 +62,4 @@ myApplication.repository(myApplication,"HomeRepository",['HomeRepository','JQUER
 
 # OElement (The right way to encapsulate your html element) 
 
-Use $CocoJs global methods to fetch and manipulate the dom element as a OElement object.
 
-/* OElement object is an class who encapsulate a html element and provide functions to manipulate it */
-
-var oelement = $CocoJS.OElement(element);
-
-* Example :
-
-Fetch an element by id :
-
-            var oelement = $CocoJS.find(htmlElementID);
-            oelement.addClass(className);
-
-------------------------------------  TO BE CONTINUED ------------------------------------------
