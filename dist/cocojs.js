@@ -11,8 +11,8 @@ var $CocoJS = $CocoJS || ($CocoJS = (function (window) {
         // Make sure we trim BOM and NBSP
         var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
 
-        var isUndefined, isDefined, isObject, isString, isNumber, isDate, isArrayLike, findHtmlElement, selectElement, selectElements,
-            factory = {}, module, injector, each, trim, now, map;
+        var isUndefined, isDefined, isObject, isString, isNumber, isDate, isArrayLike, selectElement, selectElements,
+            factory = {}, module, injector, each, trim, now, map, find;
 
         /* Define utils functions */
         isUndefined = function (value) {
