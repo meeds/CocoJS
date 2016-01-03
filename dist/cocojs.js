@@ -126,7 +126,7 @@ var $CocoJS = $CocoJS || ($CocoJS = (function (window) {
                 }
             }
 
-            return concat.apply([], ret);
+            return "".concat.apply([], ret);
         };
 
         /* OElement Object */
