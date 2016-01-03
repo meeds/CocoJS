@@ -18,7 +18,7 @@ $CocoJS.factory = {
                                
 var myApplication = $CocoJS.module($CocoJS,"myApplication",['myApplication'],function(scope){
 
-     myApplication.factory = {
+     scope.factory = {
         'JQUERY' : $CocoJS.$$document.$ 
      }
 
