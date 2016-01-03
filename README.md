@@ -15,36 +15,44 @@ $CocoJS.factory = {
 
 2 - Define your application module
 
-                                /* Parent,Application-name,Dependencies,Scope of The current application*/
+                               
 var myApplication = $CocoJS.module($CocoJS,"myApplication",['myApplication'],function(scope){
 
-     /* Define your application factory */
      myApplication.factory = {
-        'JQUERY' : $CocoJS.$$document.$ /* Don't forget to add the jquery js dependency (<script src="...jquery"/>)*/
+        'JQUERY' : $CocoJS.$$document.$ /* Don't forget to add the jquery js dependency (<script src="...jquery"/>)
      }
 
 });
 
+# $Cocojs modules 
 
-3 - Define a Controller :
+1 - Define a Component :
 
 
-myApplication.controller(myApplication,"HomeController",['HomeController','JQUERY'],function(scope,jquery){
+myApplication.component(myApplication,"HomeComponent",['HomeComponent','HomeController','JQUERY'],function(scope,homeController,jquery){
+
+
+});
+
+1 - Define a Controller :
+
+
+myApplication.controller(myApplication,"HomeController",['HomeController','HomeService','JQUERY'],function(scope,homeService,jquery){
 
 
 });
 
 
-4 - Define a Service :
+2 - Define a Service :
 
 
-myApplication.service(myApplication,"HomeService",['HomeService','JQUERY'],function(scope,jquery){
+myApplication.service(myApplication,"HomeService",['HomeService','HomeRepository','JQUERY'],function(scope,homeRepository,jquery){
 
 
 });
 
 
-5 - Define a Repository :
+3 - Define a Repository :
 
 
 myApplication.repository(myApplication,"HomeRepository",['HomeRepository','JQUERY'],function(scope,jquery){
@@ -52,7 +60,9 @@ myApplication.repository(myApplication,"HomeRepository",['HomeRepository','JQUER
 
 });
 
-6 - Use $CocoJs global methods to fetch and manipulate the dom element as a OElement object.
+# OElement (The right way to encapsulate your html element) 
+
+Use $CocoJs global methods to fetch and manipulate the dom element as a OElement object.
 
 /* OElement object is an class who encapsulate a html element and provide functions to manipulate it */
 
