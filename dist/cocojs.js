@@ -7,8 +7,6 @@ var $CocoJS = $CocoJS || ($CocoJS = (function (window) {
 
         var version = "1.0.0";
 
-        // Support: Android<4.1, IE<9
-        // Make sure we trim BOM and NBSP
         var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
 
         var isUndefined, isDefined, isObject, isString, isNumber, isDate, isArrayLike, selectElement, selectElements,
