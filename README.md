@@ -19,7 +19,7 @@ $CocoJS.factory = {
 var myApplication = $CocoJS.module($CocoJS,"myApplication",['myApplication'],function(scope){
 
      myApplication.factory = {
-        'JQUERY' : $CocoJS.$$document.$ /* Don't forget to add the jquery js dependency (<script src="...jquery"/>)
+        'JQUERY' : $CocoJS.$$document.$ 
      }
 
 });
