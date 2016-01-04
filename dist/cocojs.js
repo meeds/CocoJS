@@ -3,16 +3,20 @@
  */
 'use strict';
 
-var $CocoJS = $CocoJS || ($CocoJS = (function (window) {
+(function (global) {
 
+        var $CocoJS = {};
         var version = "1.0.0";
+        var meStr = "$me";
 
         var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+        var strundefined = typeof undefined;
 
         var isUndefined, isDefined, isObject, isString, isNumber, isDate, isArrayLike, selectElement, selectElements,
-            factory = {}, module, injector, each, trim, now, map, find;
+            factory = {}, module, injector, each, trim, now, map, find,sessionStorage;
 
         /* Define utils functions */
+
         isUndefined = function (value) {
             return typeof value === 'undefined';
         };
@@ -33,13 +37,13 @@ var $CocoJS = $CocoJS || ($CocoJS = (function (window) {
         };
         isArrayLike = Array.isArray;
         find = function (id) {
-            return new OElement(window.document.getElementById(id));
+            return new OElement(global.document.getElementById(id));
         };
         selectElement = function (cssSelector) {
-            return window.document.querySelector(cssSelector);
+            return global.document.querySelector(cssSelector);
         };
         selectElements = function (cssSelector) {
-            return window.document.querySelectorAll(cssSelector);
+            return global.document.querySelectorAll(cssSelector);
         };
         now = function () {
             return +( new Date() );
@@ -213,53 +217,59 @@ var $CocoJS = $CocoJS || ($CocoJS = (function (window) {
 
 
         /* define module */
-        module = function (parent, moduleName, dependencies, context) {
+        module = function (moduleName, dependencies, context) {
+            'use strict';
 
-            if ($CocoJS.isUndefined(parent[moduleName])) {
-                parent[moduleName] = {};
-                parent[moduleName].module = $CocoJS.module;
-                parent[moduleName].controller = $CocoJS.controller;
-                parent[moduleName].service = $CocoJS.service;
-                parent[moduleName].repository = $CocoJS.repository;
+            if ($CocoJS.isUndefined(this[moduleName])) {
+                this[moduleName] = {};
+                this[moduleName].module = $CocoJS.module;
+                this[moduleName].controller = $CocoJS.controller;
+                this[moduleName].service = $CocoJS.service;
+                this[moduleName].repository = $CocoJS.repository;
                 var injector = $CocoJS.injector(dependencies);
-                context.apply(context, injector.inject(parent));
+                context.apply(context, injector.inject(this,this[moduleName]));
             } else {
                 console.warn(moduleName + " module is already defined.");
             }
 
-            return parent[moduleName];
+            return this[moduleName];
         };
 
         /* define dependency injector */
         injector = function (dependencies) {
-            function inject(parent) {
+
+            function inject(parent,meObject) {
 
                 var dependenciesObject = [], parentFactory = parent.$$factory;
 
-                for (var i = 0; i < dependencies.length; i++) {
+                for (var i = 0;i < dependencies.length; i++) {
 
-                    if ($CocoJS.isDefined(parentFactory[dependencies[i]])) {
+                    if(dependencies[i] === meStr){
+                        dependenciesObject.push(meObject);
+                    }else{
 
-                        dependenciesObject.push(parentFactory[dependencies[i]]());
+                        if ($CocoJS.isDefined(parentFactory[dependencies[i]])) {
 
-                    } else if ($CocoJS.isDefined(parent[dependencies[i]])) {
+                            dependenciesObject.push(parentFactory[dependencies[i]]());
 
-                        dependenciesObject.push(parent[dependencies[i]]);
+                        } else if ($CocoJS.isDefined(parent[dependencies[i]])) {
 
-                    } else if ($CocoJS.isDefined($CocoJS.$$factory[dependencies[i]])) {
+                            dependenciesObject.push(parent[dependencies[i]]);
 
-                        dependenciesObject.push($CocoJS.$$factory[dependencies[i]]());
+                        } else if ($CocoJS.isDefined($CocoJS.$$factory[dependencies[i]])) {
 
-                    } else if ($CocoJS.isDefined($CocoJS[dependencies[i]])) {
+                            dependenciesObject.push($CocoJS.$$factory[dependencies[i]]());
 
-                        dependenciesObject.push($CocoJS[dependencies[i]]);
+                        } else if ($CocoJS.isDefined($CocoJS[dependencies[i]])) {
 
-                    } else {
-                        console.error("Dependency of " + dependencies[i] + " doesn't exist in the factory config of the application");
-                    }
+                            dependenciesObject.push($CocoJS[dependencies[i]]);
+
+                        } else {
+                            console.error("Dependency of " + dependencies[i] + " doesn't exist in the factory config of the application");
+                        }
 
                 }
-
+              }
                 return dependenciesObject;
             }
 
@@ -318,43 +328,54 @@ var $CocoJS = $CocoJS || ($CocoJS = (function (window) {
             };
         }
 
-        return {
-
-            $$version: version,
-            /* Html window local scoped */
-            $$window: window,
-            /* Principal $CocoJS element */
-            OElement: OElement,
-            /* Utils functions */
-            isUndefined: isUndefined,
-            isDefined: isDefined,
-            isObject: isObject,
-            isString: isString,
-            isNumber: isNumber,
-            isDate: isDate,
-            isArrayLike: isArrayLike,
-            each: each,
-            find: find,
-            selectElement: selectElement,
-            selectElements: selectElements,
-            trim: trim,
-            now: now,
-            map: map,
-            /* Define Factory */
-            $$factory: factory,
-            /* Define modules */
-            module: module,
-            controller: module,
-            service: module,
-            repository: module,
-            component: module,
-            /* Define injector */
-            injector: injector,
-            /* Promise object*/
-            $Promise: Promise
+        /* Storage */
+        sessionStorage = function(){
+            if(typeof(global.Storage) !== "undefined") {
+                return global.sessionStorage;
+            } else {
+                console.log("Sorry! No Web Storage support..");
+                return false;
+            }
         };
 
-    })(window));
+        return global.$CocoJS || (global.$CocoJS = $CocoJS = {
 
+                $$version: version,
+                /* Html global local scoped */
+                $$window: global,
+                /* Principal $CocoJS element */
+                OElement: OElement,
+                /* Utils functions */
+                isUndefined: isUndefined,
+                isDefined: isDefined,
+                isObject: isObject,
+                isString: isString,
+                isNumber: isNumber,
+                isDate: isDate,
+                isArrayLike: isArrayLike,
+                each: each,
+                find: find,
+                selectElement: selectElement,
+                selectElements: selectElements,
+                trim: trim,
+                now: now,
+                map: map,
+                /* Define Factory */
+                $$factory: factory,
+                /* Define modules */
+                module: module,
+                controller: module,
+                service: module,
+                repository: module,
+                component: module,
+                /* Define injector */
+                injector: injector,
+                /* Promise object*/
+                $Promise: Promise,
+                $sessionStorage : sessionStorage
 
-console.log("Welcome to $CocoJS version : " + $CocoJS.$$version);
+            });
+
+})(window);
+
+console.log("Welcome to $CocoJS version : " + window.$CocoJS.$$version);

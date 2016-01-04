@@ -8,6 +8,14 @@ var TemplateService = (function () {
     function TemplateServiceInstance() {
         // Private methods and variables
         function getTemplate(templatePath) {
+            if($CocoJS.$sessionStorage()){
+                var noteTemplate = $CocoJS.$sessionStorage().noteTemplate;
+                if(noteTemplate){
+                    var promise = new $CocoJS.$Promise();
+                    promise.resolve(noteTemplate);
+                    return promise;
+                }
+            }
             return HttpService.getInstance().get(templatePath);
         }
 

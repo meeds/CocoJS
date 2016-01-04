@@ -3,12 +3,12 @@
  */
 'use strict';
 
-application.service(application, "NoteService", ["NoteService"], function (scope) {
+application.service("NoteService", ["$me"], function ($me) {
 
-    scope.getNotes = function () {
+    $me.getNotes = function () {
         var promise = new $CocoJS.$Promise();
         setTimeout(function () {
-            promise.resolve(new Note('Welcome home', 'Hello welcome to home'));
+            promise.resolve(new Note('CocoJS title', 'CocosJS description'));
         }, 200);
         return promise;
     };
