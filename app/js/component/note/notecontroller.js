@@ -46,5 +46,6 @@ application.controller("NoteController", ['$me', 'NoteService', 'TemplateService
         /* Controller start */
         $me.getAndPopulateNotes.call($me,["../js/template/notetemplate.html"]);
 
-});
+
+    });
 

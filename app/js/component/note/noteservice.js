@@ -7,9 +7,7 @@ application.service("NoteService", ["$me"], function ($me) {
 
     $me.getNotes = function () {
         var promise = new $CocoJS.$Promise();
-        setTimeout(function () {
-            promise.resolve(new Note('CocoJS title', 'CocosJS description'));
-        }, 200);
+        promise.resolve(new application.Note('CocoJS title', 'CocosJS description'));
         return promise;
     };
 

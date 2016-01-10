@@ -27,6 +27,33 @@ var application = $CocoJS.module("Application", ["$me", "JQUERY"], function ($me
         }
     };
 
+    $me.entity = $CocoJS.entity;
+
+//    var obj = {};
+//
+//    // en recyclant un objet
+//    function addConstant(value) {
+//        var d = addConstant.d || (
+//                addConstant.d = {
+//                    enumerable: true,
+//                    writable: false,
+//                    configurable: false,
+//                    value: null
+//                }
+//            );
+//        d.value = value;
+//        return d;
+//    }
+//
+//// en utilisant __proto__
+//    Object.defineProperty(obj, "test", addConstant("Hello"));
+//
+//    console.log(obj.test);
+//
+//    (Object.freeze||Object)(Object.prototype);
+
+
+
     /* add other config using jquery per example */
     /* ... */
 

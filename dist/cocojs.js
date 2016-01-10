@@ -3,7 +3,7 @@
  */
 'use strict';
 
-(function (global) {
+(function CocoJSIIFE(global) {
 
         var $CocoJS = {};
         var version = "1.0.0";
@@ -13,7 +13,7 @@
         var strundefined = typeof undefined;
 
         var isUndefined, isDefined, isObject, isString, isNumber, isDate, isArrayLike, selectElement, selectElements,
-            factory = {}, module, injector, each, trim, now, map, find,sessionStorage;
+            factory = {}, module, injector, each, trim, now, map, find, sessionStorage, entity;
 
         /* Define utils functions */
 
@@ -235,6 +235,24 @@
             return this[moduleName];
         };
 
+    entity = function (entityName, inheritanceEntity, context) {
+
+        if (isDefined(this[entityName])) {
+            throw "Entity with name " + entityName + " is already defined.";
+        } else {
+            this[entityName] = context;
+        }
+
+        ///* Inheritance */
+        if (isDefined(inheritanceEntity) && inheritanceEntity != null) {
+            this[entityName].prototype = Object.create(inheritanceEntity.prototype);
+        }
+
+        this[entityName].prototype.constructor = this[entityName];
+        return this[entityName];
+    };
+
+
         /* define dependency injector */
         injector = function (dependencies) {
 
@@ -363,6 +381,7 @@
                 /* Define Factory */
                 $$factory: factory,
                 /* Define modules */
+                entity: entity,
                 module: module,
                 controller: module,
                 service: module,

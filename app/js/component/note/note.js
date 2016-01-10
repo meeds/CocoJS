@@ -3,10 +3,20 @@
  */
 'use strict';
 
-function Note(title, description) {
+
+application.entity("Note", Entity, function construct(title, description) {
+
+    /* Parent constructor call */
     Entity.call(this, "Note");
-    this.title = title || "";
-    this.description = description || "";
+
+    /* Fields */
+    this.title = title;
+    this.description = description;
+
+    /* Functions */
+    this.fullDescription = function () {
+        return title + " " + description;
+    };
 
     /* Getters and Setters */
     Object.defineProperties(this, {
@@ -28,8 +38,5 @@ function Note(title, description) {
             }
         }
     });
-}
 
-/* Set Inheritance and correct constructor */
-Note.prototype = Object.create(Entity.prototype);
-Note.prototype.constructor = Note;
+});
