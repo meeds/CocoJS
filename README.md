@@ -74,3 +74,6 @@ application.entity("Note", Entity, function construct(title, description) {
 
 });
 
+
+
+############## TO BE CONTINUED ##############
